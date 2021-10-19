@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Put, Param, Delete } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 
 import { HealthcheckService } from 'src/service/healthcheck.service';
 
@@ -9,7 +9,7 @@ export class HealthcheckController {
     private healthcheckService: HealthcheckService
   ) {}
 
-  @Get()
+  @Get('healthcheck')
   findAll() {
     return this.healthcheckService.findAll();
   }
