@@ -11,7 +11,7 @@ export class HealthcheckService {
   ) {}
 
   findAll() {
-    return this.healthcheckRepo.find();
+    return this.healthcheckRepo.findOne();
   }
 
 }
