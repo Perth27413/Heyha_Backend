@@ -15,7 +15,7 @@ export class Product {
 
     @ManyToOne(() => Category, category => category.id)
     @JoinColumn({name: 'category'})
-    category: number
+    category: Category
 
     @Column()
     stock: number
