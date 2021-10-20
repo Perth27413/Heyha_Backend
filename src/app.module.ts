@@ -5,7 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { HealthcheckModule } from './module/healthcheck.module';
 import { UserModule } from './module/user.module';
-import {ProductModule} from "./module/product.module";
+import { CategoryModule } from './module/category.module';
 
 @Module({
   imports: [
@@ -23,7 +23,7 @@ import {ProductModule} from "./module/product.module";
     }),
     HealthcheckModule,
     UserModule,
-    ProductModule
+    CategoryModule
   ],
   controllers: [AppController],
   providers: [AppService],
