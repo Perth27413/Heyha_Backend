@@ -5,8 +5,6 @@ import ProductsRequest from "../model/product/ProductsRequest";
 import ProductsResponse from "../model/product/ProductsResponse";
 import ProductModel from "../model/product/ProductModel";
 import {Product} from "../entities/product.entity";
-import {ValidateException} from "../Exception/ValidateException";
-import e from "express";
 import DataNotFoundException from "../Exception/DataNotFoundException";
 
 @Injectable()
