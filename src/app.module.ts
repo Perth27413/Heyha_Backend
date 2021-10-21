@@ -5,6 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { HealthcheckModule } from './module/healthcheck.module';
 import { UserModule } from './module/user.module';
+import { CategoryModule } from './module/category.module';
+import {ProductModule} from "./module/product.module";
 
 @Module({
   imports: [
@@ -21,7 +23,9 @@ import { UserModule } from './module/user.module';
       retryAttempts: 10
     }),
     HealthcheckModule,
-    UserModule
+    UserModule,
+    CategoryModule,
+    ProductModule
   ],
   controllers: [AppController],
   providers: [AppService],
