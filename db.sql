@@ -35,10 +35,11 @@ CREATE TABLE public.product (
                                 CONSTRAINT product_pk PRIMARY KEY (id),
                                 CONSTRAINT product_fk FOREIGN KEY (category) REFERENCES public.category(id)
 );
-INSERT INTO public.category (id, "name") VALUES(1, 'pork');
-INSERT INTO public.category (id, "name") VALUES(2, 'beef');
-INSERT INTO public.category (id, "name") VALUES(3, 'seafood');
-INSERT INTO public.category (id, "name") VALUES(4, 'noodles');
-INSERT INTO public.category (id, "name") VALUES(5, 'vegetable');
-INSERT INTO public.category (id, "name") VALUES(6, 'appetizers');
-INSERT INTO public.category (id, "name") VALUES(7, 'set');
+INSERT INTO public.category (id, "name") VALUES(1, 'ทั้งหมด');
+INSERT INTO public.category (id, "name") VALUES(2, 'ชุดเช็ต');
+INSERT INTO public.category (id, "name") VALUES(3, 'เนื้อหมู');
+INSERT INTO public.category (id, "name") VALUES(4, 'เนื้อวัว');
+INSERT INTO public.category (id, "name") VALUES(5, 'ทะเล');
+INSERT INTO public.category (id, "name") VALUES(6, 'เส้น');
+INSERT INTO public.category (id, "name") VALUES(7, 'ผัก');
+INSERT INTO public.category (id, "name") VALUES(8, 'อาหารทานเล่น');
