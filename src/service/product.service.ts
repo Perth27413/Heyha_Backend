@@ -43,6 +43,7 @@ export class ProductService {
         rsObject.page = page
         rsObject.isFirst = isFirstPage
         rsObject.isLast = isLastPage
+        rsObject.totalPage = totalPage
         return rsObject
     }
 
