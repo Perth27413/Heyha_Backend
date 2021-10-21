@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Param, Query} from "@nestjs/common";
+import {Body, Controller, Get, Post, Query} from "@nestjs/common";
 import {ProductService} from "../service/product.service";
 import ProductsRequest from "../model/product/ProductsRequest";
 import ProductsResponse from "../model/product/ProductsResponse";
@@ -11,7 +11,7 @@ export class ProductController {
         private productService: ProductService
     ) {}
 
-    @Get('products')
+    @Post('products')
     public async products(@Body() productsRequest: ProductsRequest): Promise<ProductsResponse> {
         return this.productService.getProducts(productsRequest)
     }
