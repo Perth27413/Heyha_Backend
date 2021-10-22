@@ -18,7 +18,12 @@ export class ProductController {
 
     @Get('product')
     public async product(@Query("id") id: number): Promise<ProductModel>{
-        console.log(id)
         return this.productService.getProductById(id)
     }
+
+    @Get('productsByCategory')
+    public async productsByCategory(@Query("id") id: number): Promise<Array<ProductModel>> {
+       return this.productService.getProductsByCategory(id)
+    }
+
 }

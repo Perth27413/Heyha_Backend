@@ -6,6 +6,7 @@ import ProductsResponse from "../model/product/ProductsResponse";
 import ProductModel from "../model/product/ProductModel";
 import {Product} from "../entities/product.entity";
 import DataNotFoundException from "../Exception/DataNotFoundException";
+import {Category} from "../entities/category.entity";
 
 @Injectable()
 export class ProductService {
@@ -28,6 +29,15 @@ export class ProductService {
         let product = await this.productRepo.findOne(id, {relations: ["category"]})
         if (product === undefined) throw new DataNotFoundException()
         return this.mapProductEntityToModel(product)
+    }
+
+    public async getProductsByCategory(id: number): Promise<Array<ProductModel>> {
+        console.log("function: getProductsByCategory id =" + id)
+        let categoryEntity: Category = new Category();
+        categoryEntity.id = id
+        let products: Array<Product> = await this.productRepo.find({relations: ["category"], where: {category: categoryEntity}})
+        if (!products.length) throw new DataNotFoundException()
+        return products.map(item => this.mapProductEntityToModel(item));
     }
 
     public populateRs(allList: Array<Product>, page: number, elementPerPage: number): ProductsResponse{
@@ -65,7 +75,7 @@ export class ProductService {
 
     public mapProductEntityToModel(entity: Product): ProductModel {
         console.log("function: mapProductEntityToModel")
-        const model: ProductModel = {
+        return {
             id: entity.id,
             name: entity.name,
             price: entity.price,
@@ -74,7 +84,6 @@ export class ProductService {
             imageUrl: entity.imageUrl,
             recommend: entity.recommend
         }
-        return model
 
     }
 }
