@@ -77,3 +77,6 @@ CREATE TABLE public."order" (
                                 CONSTRAINT order_fk_1 FOREIGN KEY (status_id) REFERENCES public.status(id),
                                 CONSTRAINT order_fk_2 FOREIGN KEY (payment_id) REFERENCES public.payment(id)
 );
+INSERT INTO public.status ("name") VALUES('Waiting');
+INSERT INTO public.status ("name") VALUES('Fail');
+INSERT INTO public.status ("name") VALUES('Success');

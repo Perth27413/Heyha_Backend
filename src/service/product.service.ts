@@ -61,7 +61,7 @@ export class ProductService {
     }
 
     public mapProductEntityToModel(entity: Product): ProductModel {
-        console.log("function: mapProductEntityToModel")
+        console.log("function: mapProductEntityToModel"+ " name = " + entity.name)
         return {
             id: entity.id,
             name: entity.name,
