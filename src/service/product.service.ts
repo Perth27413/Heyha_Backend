@@ -7,7 +7,6 @@ import ProductModel from "../model/product/ProductModel";
 import {Product} from "../entities/product.entity";
 import DataNotFoundException from "../Exception/DataNotFoundException";
 import {Category} from "../entities/category.entity";
-import {log} from "util";
 
 @Injectable()
 export class ProductService {

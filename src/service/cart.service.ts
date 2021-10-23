@@ -19,7 +19,7 @@ export class CartService {
         console.log("function: getCartById id = " + id)
         let userEntity: User = new User();
         userEntity.id = id
-        let cart = await this.cartRepo.find({where:{userId: userEntity}, relations: ["userId", "productId"], order:{id: "ASC"}})
+        let cart = await this.cartRepo.find({where:{userId: userEntity}, relations: ["productId.category","userId", "productId"], order:{id: "ASC"}})
         if (!cart.length) throw new DataNotFoundException
         return cart.map(item => this.mapCartEntityToModel(item))
     }
@@ -39,7 +39,7 @@ export class CartService {
             id: entity.id,
             name: entity.name,
             price: entity.price,
-            category: "dfkj",
+            category: entity.category.name,
             stock: entity.stock,
             imageUrl: entity.imageUrl,
             recommend: entity.recommend
