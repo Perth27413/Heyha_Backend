@@ -31,15 +31,6 @@ export class ProductService {
         return this.mapProductEntityToModel(product)
     }
 
-    public async getProductsByCategory(id: number): Promise<Array<ProductModel>> {
-        console.log("function: getProductsByCategory id =" + id)
-        let categoryEntity: Category = new Category();
-        categoryEntity.id = id
-        let products: Array<Product> = await this.productRepo.find({relations: ["category"], where: {category: categoryEntity}})
-        if (!products.length) throw new DataNotFoundException()
-        return products.map(item => this.mapProductEntityToModel(item));
-    }
-
     public populateRs(allList: Array<Product>, page: number, elementPerPage: number): ProductsResponse{
         let totalPage: number = Math.ceil(allList.length/elementPerPage)
         if (page > totalPage) throw new BadRequestException("Page length exceed!")
@@ -60,14 +51,10 @@ export class ProductService {
     public async fetchDataFromDB(rq: ProductsRequest){
         let recommendList
         let restList
-        if (rq.sortBy === "PRICE"){
-            recommendList = await this.productRepo.find({where:{recommend: true},relations: ["category"], order: {price: "ASC"}})
-            restList = await this.productRepo.find({where:{recommend: false},relations: ["category"], order: {price : "ASC"}})
-        }
-        else {
-            recommendList = await this.productRepo.find({where:{recommend: true},relations: ["category"], order: {create_date : "ASC"}})
-            restList = await this.productRepo.find({where:{recommend: false},relations: ["category"], order: {create_date : "ASC"}})
-        }
+        let categoryEntity: Category = new Category();
+        categoryEntity.id = rq.categoryId
+        recommendList = await this.productRepo.find({where:{recommend: true,category: categoryEntity},relations: ["category"], order: {[rq.sortBy]: rq.orderBy}})
+        restList = await this.productRepo.find({where:{recommend: false},relations: ["category"], order: {[rq.sortBy] : rq.orderBy}})
         let isQueryFail: boolean = recommendList.length === 0 || restList.length === 0
         if (isQueryFail) throw new DataNotFoundException()
         return  recommendList.concat(restList)

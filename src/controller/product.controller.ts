@@ -21,9 +21,4 @@ export class ProductController {
         return this.productService.getProductById(id)
     }
 
-    @Get('productsByCategory')
-    public async productsByCategory(@Query("id") id: number): Promise<Array<ProductModel>> {
-       return this.productService.getProductsByCategory(id)
-    }
-
 }
