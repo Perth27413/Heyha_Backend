@@ -37,7 +37,7 @@ export class ProductService {
         let startIndex: number = (elementPerPage*page) - elementPerPage
         let endIndex: number
         let isFirstPage: boolean = page === 1
-        let isLastPage: boolean = page === totalPage && !isFirstPage
+        let isLastPage: boolean = page === totalPage
         isLastPage? endIndex = startIndex + (allList.length%elementPerPage) : endIndex = startIndex + elementPerPage
         const rsObject: ProductsResponse = new ProductsResponse()
         rsObject.products = allList.slice(startIndex, endIndex).map(item => this.mapProductEntityToModel(item))
@@ -56,6 +56,7 @@ export class ProductService {
         if(rq.categoryId !== 1) whereConditionObject['category'] = rq.categoryId
         categoryEntity.id = rq.categoryId
         recommendList = await this.productRepo.find({where:whereConditionObject, relations: ["category"], order: {[rq.sortBy]: rq.orderBy}})
+        whereConditionObject.recommend = false
         restList = await this.productRepo.find({where:whereConditionObject,relations: ["category"], order: {[rq.sortBy] : rq.orderBy}})
         let isQueryFail: boolean = recommendList.length === 0 || restList.length === 0
         if (isQueryFail) throw new DataNotFoundException()
