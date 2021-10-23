@@ -81,6 +81,10 @@ INSERT INTO public.status ("name") VALUES('Waiting');
 INSERT INTO public.status ("name") VALUES('Fail');
 INSERT INTO public.status ("name") VALUES('Success');
 
+INSERT INTO public.payment ("method") VALUES('เก็บเงินปลายทาง');
+INSERT INTO public.payment ("method") VALUES('บัตรเครดิต');
+INSERT INTO public.payment ("method") VALUES('QR code');
+
 
 
 

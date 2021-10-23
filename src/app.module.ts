@@ -7,6 +7,7 @@ import { HealthcheckModule } from './module/healthcheck.module';
 import { UserModule } from './module/user.module';
 import { CategoryModule } from './module/category.module';
 import {ProductModule} from "./module/product.module";
+import {CartModule} from "./module/cart.module";
 
 @Module({
   imports: [
@@ -25,7 +26,8 @@ import {ProductModule} from "./module/product.module";
     HealthcheckModule,
     UserModule,
     CategoryModule,
-    ProductModule
+    ProductModule,
+    CartModule
   ],
   controllers: [AppController],
   providers: [AppService],
