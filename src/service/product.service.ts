@@ -57,8 +57,8 @@ export class ProductService {
         categoryEntity.id = rq.categoryId
         recommendList = await this.productRepo.find({where:whereConditionObject, relations: ["category"], order: {[rq.sortBy]: rq.orderBy}})
         whereConditionObject.recommend = false
-        restList = await this.productRepo.find({where:whereConditionObject,relations: ["category"], order: {[rq.sortBy] : rq.orderBy}})
-        let isQueryFail: boolean = recommendList.length === 0 || restList.length === 0
+        restList = await this.productRepo.find({where:whereConditionObject, relations: ["category"], order: {[rq.sortBy] : rq.orderBy}})
+        let isQueryFail: boolean = recommendList.length === 0 && restList.length === 0
         if (isQueryFail) throw new DataNotFoundException()
         return  recommendList.concat(restList)
     }
