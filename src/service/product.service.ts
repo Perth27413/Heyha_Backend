@@ -52,8 +52,10 @@ export class ProductService {
         let recommendList
         let restList
         let categoryEntity: Category = new Category();
+        let whereConditionObject = {recommend: true}
+        if(rq.categoryId !== 1) whereConditionObject['category'] = rq.categoryId
         categoryEntity.id = rq.categoryId
-        recommendList = await this.productRepo.find({where:{recommend: true,category: categoryEntity},relations: ["category"], order: {[rq.sortBy]: rq.orderBy}})
+        recommendList = await this.productRepo.find({where:whereConditionObject, relations: ["category"], order: {[rq.sortBy]: rq.orderBy}})
         restList = await this.productRepo.find({where:{recommend: false},relations: ["category"], order: {[rq.sortBy] : rq.orderBy}})
         let isQueryFail: boolean = recommendList.length === 0 || restList.length === 0
         if (isQueryFail) throw new DataNotFoundException()
@@ -71,6 +73,5 @@ export class ProductService {
             imageUrl: entity.imageUrl,
             recommend: entity.recommend
         }
-
     }
 }
