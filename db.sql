@@ -43,3 +43,37 @@ INSERT INTO public.category (id, "name") VALUES(5, 'ทะเล');
 INSERT INTO public.category (id, "name") VALUES(6, 'เส้น');
 INSERT INTO public.category (id, "name") VALUES(7, 'ผัก');
 INSERT INTO public.category (id, "name") VALUES(8, 'อาหารทานเล่น');
+CREATE TABLE public.status (
+                               id serial4 NOT NULL,
+                               "name" varchar NULL,
+                               CONSTRAINT status_pk PRIMARY KEY (id)
+);
+CREATE TABLE public.cart (
+                             id serial4 NOT NULL,
+                             user_id int4 NULL,
+                             product_id int4 NULL,
+                             product_quantity int4 NULL,
+                             created_at timestamp NULL,
+                             updated_at timestamp NULL,
+                             CONSTRAINT cart_pk PRIMARY KEY (id),
+                             CONSTRAINT cart_fk FOREIGN KEY (user_id) REFERENCES public."user"(id),
+                             CONSTRAINT cart_fk_1 FOREIGN KEY (product_id) REFERENCES public.product(id)
+);
+CREATE TABLE public.payment (
+                                id serial4 NOT NULL,
+                                "method" varchar NULL,
+                                CONSTRAINT payment_pk PRIMARY KEY (id)
+);
+CREATE TABLE public."order" (
+                                id serial4 NOT NULL,
+                                user_id int NULL,
+                                total int NULL,
+                                payment_id int NULL,
+                                status_id int NULL,
+                                created_at timestamp NULL,
+                                updated_at timestamp NULL,
+                                CONSTRAINT order_pk PRIMARY KEY (id),
+                                CONSTRAINT order_fk FOREIGN KEY (user_id) REFERENCES public."user"(id),
+                                CONSTRAINT order_fk_1 FOREIGN KEY (status_id) REFERENCES public.status(id),
+                                CONSTRAINT order_fk_2 FOREIGN KEY (payment_id) REFERENCES public.payment(id)
+);
