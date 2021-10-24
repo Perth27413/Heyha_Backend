@@ -2,7 +2,7 @@ import ProductModel from "../product/ProductModel";
 
 class CartResponse {
     public product: ProductModel
-    public total: number
+    public productQuantity: number
 }
 
 export default CartResponse
