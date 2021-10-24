@@ -27,12 +27,31 @@ export class CartService {
 
     public async addProductToCart(request: CartRequest): Promise<Object> {
         console.log("function: addProductToCart")
-        let isInsertFail: boolean = await this.insertCartToDB(request) === undefined
+        let isInsertFail: boolean = await this.insertCartToDB(request)
         if (isInsertFail) throw new ValidateException("insert fail!")
         return {
             "result": "success!",
         }
     }
+
+    public async deleteProductInCart(rq: CartRequest): Promise<Object> {
+        console.log("function: deleteProductInCart")
+        let cartEntity: CartEntity = new CartEntity();
+        let userEntity: User = new User()
+        userEntity.id = rq.userId
+        cartEntity.userId = userEntity
+        let productEntity: Product = new Product()
+        productEntity.id = rq.productId
+        cartEntity.productId = productEntity
+        let existProduct = await this.cartRepo.findOne({where: {userId: userEntity, productId: productEntity}, relations: ["userId","productId"]})
+        if (!existProduct) throw new ValidateException("Product not found!")
+        let deletedProduct =  this.cartRepo.delete(cartEntity)
+        if (!deletedProduct) throw new ValidateException("Query Fail!")
+        return {
+            result: "success!"
+        }
+    }
+
     public async insertCartToDB(rq: CartRequest): Promise<any> {
         let cartEntity: CartEntity = new CartEntity();
         let userEntity: User = new User()

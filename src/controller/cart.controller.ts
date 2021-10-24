@@ -20,4 +20,9 @@ export class CartController {
         return this.cartService.addProductToCart(request)
     }
 
+    @Post('cart/delete')
+    public async deleteProductInCart(@Body() request: CartRequest): Promise<Object> {
+        return this.cartService.deleteProductInCart(request)
+    }
+
 }
