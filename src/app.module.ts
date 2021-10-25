@@ -9,6 +9,7 @@ import { CategoryModule } from './module/category.module';
 import {ProductModule} from "./module/product.module";
 import {CartModule} from "./module/cart.module";
 import {PaymentModule} from "./module/payment.module";
+import {OrderModule} from "./module/order.module";
 
 @Module({
   imports: [
@@ -29,7 +30,8 @@ import {PaymentModule} from "./module/payment.module";
     CategoryModule,
     ProductModule,
     CartModule,
-    PaymentModule
+    PaymentModule,
+    OrderModule
   ],
   controllers: [AppController],
   providers: [AppService],

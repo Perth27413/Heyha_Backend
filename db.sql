@@ -77,6 +77,19 @@ CREATE TABLE public."order" (
                                 CONSTRAINT order_fk_1 FOREIGN KEY (status_id) REFERENCES public.status(id),
                                 CONSTRAINT order_fk_2 FOREIGN KEY (payment_id) REFERENCES public.payment(id)
 );
+
+CREATE TABLE public.order_item (
+                                   id serial4 NOT NULL,
+                                   order_id int NULL,
+                                   product_id int NULL,
+                                   product_quantity varchar NULL,
+                                   created_at timestamp NULL,
+                                   updated_at timestamp NULL,
+                                   CONSTRAINT order_item_pk PRIMARY KEY (id),
+                                   CONSTRAINT order_item_fk FOREIGN KEY (order_id) REFERENCES public."order"(id),
+                                   CONSTRAINT order_item_fk_1 FOREIGN KEY (product_id) REFERENCES public.product(id)
+);
+
 INSERT INTO public.status ("name") VALUES('Waiting');
 INSERT INTO public.status ("name") VALUES('Fail');
 INSERT INTO public.status ("name") VALUES('Success');
