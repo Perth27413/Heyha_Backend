@@ -90,9 +90,9 @@ CREATE TABLE public.order_item (
                                    CONSTRAINT order_item_fk_1 FOREIGN KEY (product_id) REFERENCES public.product(id)
 );
 
-INSERT INTO public.status ("name") VALUES('Waiting');
-INSERT INTO public.status ("name") VALUES('Fail');
-INSERT INTO public.status ("name") VALUES('Success');
+INSERT INTO public.status ("name") VALUES('กำลังเตรียมอาหาร');
+INSERT INTO public.status ("name") VALUES('กำลังจัดส่ง');
+INSERT INTO public.status ("name") VALUES('จัดส่งสำเร็จ');
 
 INSERT INTO public.payment ("method") VALUES('เก็บเงินปลายทาง');
 INSERT INTO public.payment ("method") VALUES('บัตรเครดิต');
