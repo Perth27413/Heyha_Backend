@@ -27,8 +27,8 @@ export class CartService {
 
     public async addProductToCart(request: CartRequest): Promise<Object> {
         console.log("function: addProductToCart")
-        let isInsertFail: boolean = await this.insertCartToDB(request)
-        if (isInsertFail) throw new ValidateException("insert fail!")
+        let isInsertFail: boolean = await this.insertCartToDB(request) ?? false
+        if (!isInsertFail) throw new ValidateException("insert fail!")
         return {
             "result": "success!",
         }
@@ -53,22 +53,26 @@ export class CartService {
     }
 
     public async insertCartToDB(rq: CartRequest): Promise<any> {
-        let cartEntity: CartEntity = new CartEntity();
-        let userEntity: User = new User()
-        userEntity.id = rq.userId
-        cartEntity.userId = userEntity
-        let productEntity: Product = new Product()
-        productEntity.id = rq.productId
-        cartEntity.productId = productEntity
-        cartEntity.productQuantity = rq.productQuantity
-        cartEntity.updatedAt = new Date()
-        cartEntity.createdAt = new Date()
-        let existId = await this.cartRepo.findOne({where: {userId: userEntity, productId: productEntity}, relations: ["userId","productId"]})
-        if (existId) {
-            cartEntity.productQuantity += existId.productQuantity
-            return this.cartRepo.save({...existId,...cartEntity})
-        }
-        return await this.cartRepo.save(cartEntity)
+       try {
+            let cartEntity: CartEntity = new CartEntity();
+            let userEntity: User = new User()
+            userEntity.id = rq.userId
+            cartEntity.userId = userEntity
+            let productEntity: Product = new Product()
+            productEntity.id = rq.productId
+            cartEntity.productId = productEntity
+            cartEntity.productQuantity = rq.productQuantity
+            cartEntity.updatedAt = new Date()
+            cartEntity.createdAt = new Date()
+            let existId = await this.cartRepo.findOne({where: {userId: userEntity, productId: productEntity}, relations: ["userId","productId"]})
+            if (existId) {
+                cartEntity.productQuantity += existId.productQuantity
+                return this.cartRepo.save({...existId,...cartEntity})
+            }
+            return await this.cartRepo.save(cartEntity)
+       } catch (error) {
+           return null
+       }
     }
 
     public mapCartEntityToModel(entity: CartEntity): CartResponse {
