@@ -19,6 +19,7 @@ export class OrderService {
     ) {}
 
     public async addOrder(rq: AddOrderRequest): Promise<Object> {
+        let orderId: number
         try {
             let cartList = await this.fetchCartList(rq)
             let orderEntity = await this.populateOrderEntity(rq)
@@ -28,6 +29,7 @@ export class OrderService {
             let userEntity: User = new User()
             userEntity.id = rq.userId
             let deleteCartByUserId = await this.cartRepo.delete({userId: userEntity})
+            orderId = savedOrderEntity.id
         }
 
         catch (e) {
@@ -35,7 +37,8 @@ export class OrderService {
             return
         }
         return {
-            "result": "success!"
+            "result": "success!",
+            "orderId": orderId
         }
     }
 
@@ -47,6 +50,10 @@ export class OrderService {
         }
         return await this.orderRepo.update(orderId, existEntity)
 
+    }
+
+    public async getOrderById(orderId: number): Promise<OrderEntity> {
+        return await this.orderRepo.findOne(orderId, {relations: ["userId", "paymentId", "statusId"]})
     }
 
     public async insertOrderItemList(orderItemList: Array<OrderItemEntity>) {

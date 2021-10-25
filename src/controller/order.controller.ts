@@ -19,5 +19,9 @@ export class OrderController {
         return this.orderService.updateOrderStatus(orderId, statusId)
     }
 
+    @Get('orderById')
+    public async getOrderById(@Query('orderId') orderId: number) {
+        return this.orderService.getOrderById(orderId)
+    }
 
 }
